@@ -7,6 +7,7 @@ import multiprocessing as mp
 
 from subprocess import PIPE
 from unittest import TestCase
+import pytest
 from tornado.testing import AsyncTestCase, gen_test
 from traitlets.config.loader import Config
 from jupyter_client import KernelManager, AsyncKernelManager
@@ -105,6 +106,7 @@ class TestKernelManager(TestCase):
         self._run_lifecycle(self._get_tcp_km())
         self._run_lifecycle(self._get_tcp_km())
 
+    @skip_win32
     def test_start_sequence_ipc_kernels(self):
         """Ensure that a sequence of kernel startups doesn't break anything."""
         self._run_lifecycle(self._get_ipc_km())
@@ -128,6 +130,7 @@ class TestKernelManager(TestCase):
             thread.join()
             thread2.join()
 
+    @skip_win32
     def test_start_parallel_process_kernels(self):
         self.test_tcp_lifecycle()
 
@@ -239,6 +242,7 @@ class TestAsyncKernelManager(AsyncTestCase):
         await self._run_lifecycle(self._get_tcp_km())
 
     @gen_test
+    @skip_win32
     async def test_start_sequence_ipc_kernels(self):
         """Ensure that a sequence of kernel startups doesn't break anything."""
         await self._run_lifecycle(self._get_ipc_km())
@@ -270,6 +274,7 @@ class TestAsyncKernelManager(AsyncTestCase):
             thread2.join()
 
     @gen_test
+    @skip_win32
     async def test_start_parallel_process_kernels(self):
         await self.raw_tcp_lifecycle()
 
