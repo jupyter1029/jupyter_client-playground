@@ -393,7 +393,6 @@ class TestAsyncKernelManager:
         assert reply['user_expressions']['poll'] == [-signal.SIGINT] * N
 
     @pytest.mark.timeout(10)
-    @pytest.mark.skipif(sys.platform == 'win32', reason="Windows doesn't support async kernels")
     async def test_start_new_async_kernel(self, install_kernel, start_async_kernel):
         km, kc = start_async_kernel
         is_alive = await km.is_alive()
